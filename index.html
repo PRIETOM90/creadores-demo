@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Creadores — Demo</title>
+  <meta name="description" content="Mock page para vender saludos personalizados (música y fútbol).">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass{backdrop-filter:saturate(120%) blur(6px)}
+  </style>
+</head>
+<body class="min-h-screen bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(255,149,5,.12),transparent),radial-gradient(40%_30%_at_80%_10%,rgba(0,122,255,.10),transparent)] text-slate-900">
+  <!-- Ribbon -->
+  <div class="flex items-center justify-center gap-2 bg-black px-3 py-1 text-xs text-white">
+    <span class="inline-flex h-2 w-2 animate-pulse rounded-full bg-emerald-400"></span>
+    DEMO • Mock funcional para ventas
+  </div>
+
+  <!-- Header -->
+  <header class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 rounded-2xl bg-white/70 glass px-3 py-1.5 shadow-sm ring-1 ring-black/10">
+        <div class="grid h-8 w-8 place-items-center rounded-xl bg-black text-white font-black">C</div>
+        <div class="pr-1">
+          <div class="text-sm font-semibold leading-none">Creadores</div>
+          <div class="text-[11px] leading-tight text-black/50">Saludos personalizados</div>
+        </div>
+      </div>
+      <div class="hidden items-center gap-2 rounded-2xl bg-white/70 glass px-3 py-1.5 shadow-sm ring-1 ring-black/10 md:flex">
+        <span class="text-xs text-black/70">UY • AR</span>
+      </div>
+    </div>
+    <div class="hidden flex-1 items-center md:flex">
+      <div class="mx-auto flex w-full max-w-md items-center gap-2 rounded-2xl bg-white/80 glass px-3 py-2 shadow-sm ring-1 ring-black/10">
+        <input id="search" class="w-full bg-transparent text-sm outline-none placeholder:text-black/40" placeholder="Buscar creador, club, banda…" />
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="currencyBtn" class="rounded-xl bg-white/50 border border-black/10 hover:bg-white px-4 py-2 text-sm font-semibold">$
+        UYU</button>
+      <button id="loginBtn" class="rounded-xl bg-black text-white hover:bg-black/90 px-4 py-2 text-sm font-semibold">Ingresar</button>
+      <div id="userBadge" class="hidden items-center gap-2 rounded-full bg-white/80 glass px-2 py-1 ring-1 ring-black/10">
+        <div id="userInitial" class="grid h-8 w-8 place-items-center rounded-full bg-black text-white font-bold">U</div>
+        <div class="pr-2 text-sm">
+          <div id="userName" class="leading-none font-medium">Usuario</div>
+          <button id="logoutBtn" class="text-xs text-black/50 hover:text-black/70">Salir</button>
+        </div>
+      </div>
+      <button id="ordersBtn" class="hidden rounded-xl bg-black/5 hover:bg-black/10 px-4 py-2 text-sm font-semibold">Mis
+        pedidos</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-6xl px-4">
+    <div class="overflow-hidden rounded-3xl bg-white/70 glass p-6 shadow-sm ring-1 ring-black/10">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="flex flex-col justify-center">
+          <span class="w-fit rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-700">Nuevo • Mercado UY / AR</span>
+          <h1 class="mt-3 text-3xl font-black tracking-tight md:text-4xl">Saludos personalizados de tus ídolos <span class="bg-gradient-to-r from-black via-black to-black bg-clip-text text-transparent">de la música y el fútbol</span></h1>
+          <p class="mt-3 text-sm text-black/70">Pedí un video para cumpleaños, motivación del equipo o acciones de marca. Entregas desde 24h y uso personal o comercial.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="#catalogo" class="rounded-xl bg-black text-white px-4 py-2 text-sm font-semibold inline-flex items-center">Explorar creadores →</a>
+            <button class="rounded-xl bg-white/50 border border-black/10 hover:bg-white px-4 py-2 text-sm font-semibold" onclick="openLogin()">Soy creador/a</button>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-3 text-xs">
+            <span class="inline-flex items-center gap-1 rounded-full bg-white/70 px-2.5 py-1 border border-black/5 shadow-sm">⏱️ Entrega 24–72h</span>
+            <span class="inline-flex items-center gap-1 rounded-full bg-white/70 px-2.5 py-1 border border-black/5 shadow-sm">🛡️ Pago protegido</span>
+            <span class="inline-flex items-center gap-1 rounded-full bg-white/70 px-2.5 py-1 border border-black/5 shadow-sm">💳 Factura y comprobante</span>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute -inset-3 -z-10 rounded-3xl bg-gradient-to-tr from-orange-200/60 to-blue-200/60 blur-2xl"></div>
+          <div id="heroCards" class="grid gap-3 sm:grid-cols-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs + Grid -->
+  <section id="catalogo" class="mx-auto mt-6 max-w-6xl px-4">
+    <div class="flex items-center justify-between gap-3">
+      <div class="flex items-center gap-1 rounded-2xl bg-white/70 glass p-1 shadow-sm ring-1 ring-black/10">
+        <button id="tabMusica" class="inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold bg-black text-white">Músicos</button>
+        <button id="tabFutbol" class="inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold text-black hover:bg-black/5">Fútbol</button>
+      </div>
+      <div class="flex items-center gap-2 md:hidden">
+        <div class="flex items-center gap-2 rounded-2xl bg-white/80 glass px-3 py-2 shadow-sm ring-1 ring-black/10">
+          <input id="searchMobile" class="w-40 bg-transparent text-sm outline-none placeholder:text-black/40" placeholder="Buscar…" />
+        </div>
+      </div>
+    </div>
+
+    <div id="grid" class="mt-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3"></div>
+
+    <div id="empty" class="hidden mt-10 rounded-2xl border border-dashed border-black/10 bg-white/50 p-8 text-center text-sm text-black/60">
+      No encontramos resultados para tu búsqueda.
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mx-auto mt-10 max-w-6xl px-4 pb-10">
+    <div class="rounded-3xl bg-white/70 glass p-6 shadow-sm ring-1 ring-black/10">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <div class="grid h-8 w-8 place-items-center rounded-xl bg-black text-white font-black">C</div>
+          <div>
+            <div class="text-sm font-semibold">Creadores</div>
+            <div class="text-xs text-black/50">Demo comercial (mock)</div>
+          </div>
+        </div>
+        <div class="text-xs text-black/50">© <span id="year"></span> Creadores. Todos los derechos reservados.</div>
+      </div>
+      <div class="mt-3 text-xs text-black/50">
+        * Este sitio es una maqueta demostrativa. No procesa pagos reales. Los contenidos, precios y marcas son ilustrativos.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
+    <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-semibold">Ingresar</h3>
+        <button onclick="closeLogin()" class="rounded-full p-1 hover:bg-black/5" aria-label="Cerrar">✕</button>
+      </div>
+      <form id="loginForm" class="mt-4 space-y-3">
+        <div class="grid gap-1">
+          <label class="text-xs text-black/60">Nombre y apellido</label>
+          <input id="nameInput" class="w-full rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm shadow-sm placeholder:text-black/40 focus:border-black/30 focus:outline-none" placeholder="María Pérez" required />
+        </div>
+        <div class="grid gap-1">
+          <label class="text-xs text-black/60">Email</label>
+          <input id="emailInput" type="email" class="w-full rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm shadow-sm placeholder:text-black/40 focus:border-black/30 focus:outline-none" placeholder="maria@empresa.com" required />
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button type="button" onclick="closeLogin()" class="rounded-xl px-4 py-2 text-sm font-semibold">Cancelar</button>
+          <button type="submit" class="rounded-xl bg-black text-white px-4 py-2 text-sm font-semibold">Entrar</button>
+        </div>
+        <div class="text-xs text-black/50">* Simulación — no se envía correo real.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Request Modal -->
+  <div id="requestModal" class="hidden fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
+    <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 id="reqTitle" class="text-lg font-semibold">Solicitar saludo</h3>
+        <button onclick="closeRequest()" class="rounded-full p-1 hover:bg-black/5" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="mt-4 space-y-5">
+        <div class="flex items-center gap-3">
+          <div id="reqAvatar" class="grid h-12 w-12 place-items-center rounded-2xl bg-black text-white shadow-sm"></div>
+          <div>
+            <div id="reqName" class="text-sm font-semibold">—</div>
+            <div id="reqMeta" class="text-xs text-black/50">—</div>
+          </div>
+          <div class="ml-auto text-right">
+            <div class="text-xs text-black/50">Desde</div>
+            <div id="reqBase" class="text-sm font-semibold">$ —</div>
+          </div>
+        </div>
+
+        <div class="grid gap-3">
+          <div class="grid gap-1">
+            <label class="text-xs text-black/60">¿Para quién es?</label>
+            <input id="inpRecipient" class="w-full rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm shadow-sm">
+          </div>
+          <div class="grid gap-1">
+            <label class="text-xs text-black/60">Ocasión</label>
+            <input id="inpOccasion" class="w-full rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm shadow-sm">
+          </div>
+          <div class="grid gap-1">
+            <label class="text-xs text-black/60">Mensaje para el/la creador/a</label>
+            <textarea id="inpMessage" rows="4" class="w-full rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm shadow-sm">Hola! Podés saludar a...</textarea>
+          </div>
+        </div>
+
+        <div class="grid gap-3 rounded-2xl bg-black/[0.03] p-3">
+          <div class="flex items-center justify-between">
+            <div class="text-sm">Entrega 24h (+30%)</div>
+            <label class="relative inline-flex h-6 w-11 cursor-pointer items-center">
+              <input id="swExp" type="checkbox" class="peer sr-only">
+              <span class="absolute inset-0 rounded-full bg-black/10 transition peer-checked:bg-black"></span>
+              <span class="relative left-0 z-[1] ml-1 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-5"></span>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-sm">Uso comercial (x2.5)</div>
+            <label class="relative inline-flex h-6 w-11 cursor-pointer items-center">
+              <input id="swComm" type="checkbox" class="peer sr-only">
+              <span class="absolute inset-0 rounded-full bg-black/10 transition peer-checked:bg-black"></span>
+              <span class="relative left-0 z-[1] ml-1 h-5 w-5 rounded-full bg-white shadow transition peer-checked:translate-x-5"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-black/10 p-3">
+          <div class="text-xs text-black/60">Resumen</div>
+          <div class="mt-1 flex items-center justify-between text-sm">
+            <span>Precio base</span>
+            <span id="sumBase">$ —</span>
+          </div>
+          <div id="sumExp" class="hidden flex items-center justify-between text-sm">
+            <span>Entrega 24h (+30%)</span>
+            <span id="sumExpVal">+ $ —</span>
+          </div>
+          <div id="sumComm" class="hidden flex items-center justify-between text-sm">
+            <span>Licencia comercial (x2.5)</span>
+            <span id="sumCommVal">+ $ —</span>
+          </div>
+          <div class="mt-2 flex items-center justify-between border-t border-black/10 pt-2 text-sm font-semibold">
+            <span>Total</span>
+            <span id="sumTotal">$ —</span>
+          </div>
+          <div class="mt-2 text-[11px] text-black/50">* El pedido es simulado. No se realizará ningún cobro real.</div>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button onclick="closeRequest()" class="rounded-xl px-4 py-2 text-sm font-semibold">Cerrar</button>
+          <button onclick="confirmOrder()" class="rounded-xl bg-black text-white px-4 py-2 text-sm font-semibold">Confirmar pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Drawer -->
+  <div id="ordersDrawer" class="pointer-events-none fixed right-0 top-0 z-50 h-full w-[420px] translate-x-full bg-white p-6 shadow-2xl transition-transform">
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-semibold">Mis pedidos</h3>
+      <button onclick="toggleOrders(false)" class="rounded-full p-1 hover:bg-black/5">✕</button>
+    </div>
+    <div id="ordersList" class="mt-4 overflow-y-auto pr-2" style="max-height: calc(100% - 4rem)"></div>
+  </div>
+  <div id="ordersBackdrop" class="hidden fixed inset-0 z-40 bg-black/40" onclick="toggleOrders(false)"></div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-4 left-1/2 z-[60] hidden -translate-x-1/2 rounded-2xl bg-black px-4 py-2 text-sm text-white shadow-lg"></div>
+
+  <script>
+    const creators = [
+      {id:"uy1",name:"Lucía Valdez",tag:"Cantante",country:"Uruguay",category:"musica",price:{UYU:1500,ARS:60000},delivery:48,rating:4.9,reviews:127},
+      {id:"uy2",name:"Rami Ortega",tag:"Guitarrista",country:"Uruguay",category:"musica",price:{UYU:1200,ARS:48000},delivery:72,rating:4.7,reviews:83},
+      {id:"ar1",name:"Gonzalo \"El 9\"",tag:"Delantero",team:"River (AR)",country:"Argentina",category:"futbol",price:{UYU:3400,ARS:136000},delivery:72,rating:4.8,reviews:210},
+      {id:"uy3",name:"Santi Pérez",tag:"Mediocampista",team:"Peñarol (UY)",country:"Uruguay",category:"futbol",price:{UYU:3000,ARS:120000},delivery:48,rating:4.6,reviews:97},
+      {id:"ar2",name:"Mariela Gómez",tag:"Vocalista",country:"Argentina",category:"musica",price:{UYU:1800,ARS:72000},delivery:24,rating:5.0,reviews:45},
+      {id:"uy4",name:"Diego Fernández",tag:"Arquero",team:"Nacional (UY)",country:"Uruguay",category:"futbol",price:{UYU:2600,ARS:104000},delivery:24,rating:4.8,reviews:160},
+    ];
+
+    let state = {
+      currency: "UYU",
+      category: "musica",
+      search: "",
+      user: null,
+      orders: [],
+      selected: null,
+      request: {recipient:"",occasion:"",message:"Hola! Podés saludar a...",exp:false,comm:false,total:0}
+    };
+
+    const $ = (id)=>document.getElementById(id);
+    const fmt = (v,cur)=> new Intl.NumberFormat("es-UY",{style:"currency",currency:cur,maximumFractionDigits:0}).format(v);
+
+    // Init
+    window.addEventListener("DOMContentLoaded", ()=>{
+      $("year").textContent = new Date().getFullYear();
+      render();
+      // hero cards (4)
+      const hero = $("heroCards");
+      creators.slice(0,4).forEach(c=> hero.appendChild(card(c)));
+      // events
+      $("tabMusica").onclick = ()=>{state.category="musica"; render();};
+      $("tabFutbol").onclick  = ()=>{state.category="futbol"; render();};
+      $("search").oninput = (e)=>{state.search=e.target.value; render();};
+      $("searchMobile").oninput = (e)=>{state.search=e.target.value; render();};
+      $("currencyBtn").onclick = ()=>{
+        state.currency = state.currency==="UYU"?"ARS":"UYU";
+        $("currencyBtn").textContent = state.currency==="UYU"?"$ UYU":"$ ARS";
+        render();
+      };
+      $("loginBtn").onclick = openLogin;
+      $("logoutBtn").onclick = ()=>{state.user=null; updateAuthUI();};
+      $("ordersBtn").onclick = ()=>toggleOrders(true);
+      $("loginForm").onsubmit = (e)=>{
+        e.preventDefault();
+        const name = $("nameInput").value.trim();
+        const email = $("emailInput").value.trim();
+        if(!name || !email.includes("@")) return;
+        state.user = {name,email};
+        updateAuthUI();
+        closeLogin();
+        toast("¡Ingreso simulado exitoso!");
+      };
+    });
+
+    function render(){
+      const list = creators
+        .filter(c=>c.category===state.category)
+        .filter(c=> (c.name+" "+(c.tag||"")+" "+(c.team||"")+" "+c.country).toLowerCase().includes(state.search.toLowerCase()));
+      const grid = $("grid");
+      grid.innerHTML = "";
+      list.forEach(c=> grid.appendChild(card(c)));
+      $("empty").classList.toggle("hidden", list.length!==0);
+    }
+
+    function card(c){
+      const wrap = document.createElement("div");
+      wrap.className = "rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/10 space-y-3";
+      wrap.innerHTML = `
+        <div class="flex items-center gap-3">
+          <div class="grid h-12 w-12 flex-none place-items-center rounded-2xl bg-black text-white shadow-sm"><span class="text-sm font-semibold">${initials(c.name)}</span></div>
+          <div class="min-w-0">
+            <div class="truncate text-sm font-semibold">${c.name}</div>
+            <div class="text-xs text-black/50">${c.tag}${c.team?` • ${c.team}`:""}</div>
+          </div>
+          <div class="ml-auto text-right">
+            <div class="text-xs text-black/50">Desde</div>
+            <div class="text-sm font-semibold">${fmt(c.price[state.currency], state.currency)}</div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-xs text-black/60">
+          <div>⭐ ${c.rating} (${c.reviews})</div>
+          <div>⏱️ ${c.delivery}h</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="flex-1 rounded-xl bg-black text-white px-4 py-2 text-sm font-semibold">Solicitar saludo</button>
+          <button class="rounded-xl bg-white/50 border border-black/10 px-4 py-2 text-sm font-semibold">Ver perfil</button>
+        </div>
+      `;
+      wrap.querySelector("button").onclick = ()=>openRequest(c);
+      return wrap;
+    }
+
+    // Auth UI
+    function updateAuthUI(){
+      const logged = !!state.user;
+      $("loginBtn").classList.toggle("hidden", logged);
+      $("userBadge").classList.toggle("hidden", !logged);
+      $("ordersBtn").classList.toggle("hidden", !logged);
+      if(logged){
+        $("userName").textContent = state.user.name;
+        $("userInitial").textContent = (state.user.name[0]||"U").toUpperCase();
+      }
+    }
+
+    // Login modal
+    function openLogin(){ $("loginModal").classList.remove("hidden"); }
+    function closeLogin(){ $("loginModal").classList.add("hidden"); }
+
+    // Request modal
+    function openRequest(c){
+      state.selected = c;
+      const base = c.price[state.currency];
+      state.request = {recipient:"",occasion:"",message:"Hola! Podés saludar a...",exp:false,comm:false,total:base};
+      $("reqTitle").textContent = `Solicitar saludo — ${c.name}`;
+      $("reqAvatar").innerHTML = `<span class="text-sm font-semibold">${initials(c.name)}</span>`;
+      $("reqName").textContent = c.name;
+      $("reqMeta").textContent = `${c.tag}${c.country?` • ${c.country}`:""}`;
+      $("reqBase").textContent = fmt(base, state.currency);
+      $("sumBase").textContent = fmt(base, state.currency);
+      $("sumExp").classList.add("hidden");
+      $("sumComm").classList.add("hidden");
+      $("sumTotal").textContent = fmt(base, state.currency);
+      $("swExp").checked = false;
+      $("swComm").checked = false;
+      $("inpRecipient").value = "";
+      $("inpOccasion").value = "";
+      $("inpMessage").value = "Hola! Podés saludar a...";
+      $("requestModal").classList.remove("hidden");
+
+      $("swExp").onchange = (e)=>{ state.request.exp = e.target.checked; updateSummary(); };
+      $("swComm").onchange = (e)=>{ state.request.comm = e.target.checked; updateSummary(); };
+      $("inpRecipient").oninput = (e)=> state.request.recipient = e.target.value;
+      $("inpOccasion").oninput = (e)=> state.request.occasion = e.target.value;
+      $("inpMessage").oninput  = (e)=> state.request.message = e.target.value;
+    }
+    function closeRequest(){ $("requestModal").classList.add("hidden"); }
+
+    function updateSummary(){
+      const base = state.selected.price[state.currency];
+      const expVal = Math.round(base*0.3);
+      const commVal = Math.round(base*(state.request.exp?1.5:1.5)); // referencia visual
+      let total = base;
+      $("sumBase").textContent = fmt(base, state.currency);
+      if(state.request.exp){
+        $("sumExp").classList.remove("hidden");
+        $("sumExpVal").textContent = "+ " + fmt(expVal, state.currency);
+        total = Math.round(total*1.3);
+      } else {
+        $("sumExp").classList.add("hidden");
+      }
+      if(state.request.comm){
+        $("sumComm").classList.remove("hidden");
+        $("sumCommVal").textContent = "+ " + fmt(Math.round(base*(state.request.exp?1.5:1.5)), state.currency);
+        total = Math.round(total*2.5);
+      } else {
+        $("sumComm").classList.add("hidden");
+      }
+      state.request.total = total;
+      $("sumTotal").textContent = fmt(total, state.currency);
+    }
+
+    function confirmOrder(){
+      const o = {
+        id: "ord_"+Date.now(),
+        date: new Date().toISOString(),
+        creator: state.selected,
+        currency: state.currency,
+        ...state.request
+      };
+      state.orders.unshift(o);
+      closeRequest();
+      toast("¡Pedido creado! (simulado)");
+      // open orders
+      toggleOrders(true);
+      renderOrders();
+    }
+
+    // Orders drawer
+    function toggleOrders(open){
+      $("ordersDrawer").style.transform = open ? "translateX(0)" : "translateX(100%)";
+      $("ordersDrawer").classList.toggle("pointer-events-none", !open);
+      $("ordersBackdrop").classList.toggle("hidden", !open);
+    }
+    function renderOrders(){
+      const box = $("ordersList");
+      if(state.orders.length===0){
+        box.innerHTML = `<div class="mt-6 rounded-2xl border border-dashed border-black/10 bg-white/50 p-6 text-sm text-black/60">Todavía no hiciste pedidos. Elegí un creador y probá el flujo.</div>`;
+        return;
+      }
+      box.innerHTML = state.orders.map(o=>`
+        <div class="flex items-start gap-3 rounded-2xl bg-white p-3 mb-3 shadow-sm ring-1 ring-black/10">
+          <div class="grid h-12 w-12 flex-none place-items-center rounded-2xl bg-black text-white shadow-sm"><span class="text-sm font-semibold">${initials(o.creator.name)}</span></div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold">${o.creator.name}</div>
+                <div class="text-xs text-black/50">${o.occasion || "—"}</div>
+              </div>
+              <div class="text-sm font-semibold">${fmt(o.total, o.currency)}</div>
+            </div>
+            <div class="mt-1 text-xs text-black/60">Para: ${o.recipient || "—"} • ${new Date(o.date).toLocaleString()}</div>
+            <div class="mt-2 rounded-xl bg-black/[0.03] p-2 text-xs">${o.message}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Helpers
+    function initials(name){ return name.split(" ").map(n=>n[0]).slice(0,2).join(""); }
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.remove("hidden");
+      setTimeout(()=>t.classList.add("hidden"), 2500);
+    }
+
+    // Expose for buttons
+    window.openLogin = openLogin;
+    window.closeLogin = closeLogin;
+    window.openRequest = openRequest;
+    window.closeRequest = closeRequest;
+    window.confirmOrder = confirmOrder;
+    window.toggleOrders = toggleOrders;
+  </script>
+</body>
+</html>
